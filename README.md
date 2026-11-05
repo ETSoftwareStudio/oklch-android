@@ -30,6 +30,24 @@ minSdk 21, Compose `ui-graphics` 1.8.1 (exposed as an `api` dependency).
 
 ## Install
 
-Not published yet.
+Maven Central:
+
+```kotlin
+dependencies {
+    implementation("studio.etsoftware:oklch:1.0.0")
+}
+```
+
+## Releasing
+
+1. Set the version in `oklch/build.gradle.kts` (`coordinates`).
+2. Keep the Central Portal user token and the GPG key in `~/.gradle/gradle.properties`
+   (`mavenCentralUsername`, `mavenCentralPassword`, `signingInMemoryKey`,
+   `signingInMemoryKeyPassword`), never in the repo.
+3. Run `./gradlew publishAndReleaseToMavenCentral`, then tag the commit with the version.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
 
 Math: Björn Ottosson, "A perceptual color space for image processing".
