@@ -25,12 +25,14 @@ kotlin {
 dependencies {
     api("androidx.compose.ui:ui-graphics:1.8.1")
     implementation("androidx.annotation:annotation:1.9.1")
+    // For @Immutable. ui-graphics already brings this artifact in at runtime.
+    implementation("androidx.compose.runtime:runtime:1.8.1")
 
     testImplementation("junit:junit:4.13.2")
 }
 
 mavenPublishing {
-    coordinates("studio.etsoftware", "oklch", "1.0.0")
+    coordinates("studio.etsoftware", "oklch", "1.1.0")
     publishToMavenCentral()
     // Maven Central requires signed artifacts. Sign whenever a key is configured
     // (~/.gradle/gradle.properties or CI), so local builds work without one.

@@ -27,7 +27,7 @@ The library is on Maven Central:
 
 | Group | Artifact | Version |
 |---|---|---|
-| `studio.etsoftware` | `oklch` | `1.0.0` |
+| `studio.etsoftware` | `oklch` | `1.1.0` |
 
 Requires minSdk 21. It brings in Compose `ui-graphics` 1.8.1 as an `api` dependency.
 
@@ -36,7 +36,7 @@ your module's `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("studio.etsoftware:oklch:1.0.0")
+    implementation("studio.etsoftware:oklch:1.1.0")
 }
 ```
 
@@ -44,7 +44,7 @@ Or with a version catalog (`gradle/libs.versions.toml`):
 
 ```toml
 [versions]
-oklch = "1.0.0"
+oklch = "1.1.0"
 
 [libraries]
 oklch = { module = "studio.etsoftware:oklch", version.ref = "oklch" }
@@ -91,6 +91,25 @@ fun AppTheme(content: @Composable () -> Unit) {
     )
 }
 ```
+
+### Value type
+
+`Oklch` holds one color: `l`, `c`, `h` and `alpha`. Use it to keep colors in OKLCH, mix them
+and convert them back to Compose.
+
+```kotlin
+import studio.etsoftware.oklch.Oklch
+import studio.etsoftware.oklch.toOklch
+
+val brand = Oklch(0.55, 0.15, 262.0)            // the hue wraps: -30.0 becomes 330.0
+val accent = Color.Red.toOklch()               // any color space, P3 too
+val between = brand.mix(accent, 0.5)           // like CSS color-mix(in oklch)
+Box(Modifier.background(between.toColor()))    // Display P3; toColor(OklchGamut.SRGB) for sRGB
+```
+
+- `mix` takes the shorter way round the hue circle. `t` is not clamped, so springs can overshoot.
+- A grey (chroma below 0.000004) has no hue. It takes the hue of the other color in a mix.
+- Alpha premultiplies L and C in a mix, so a transparent end does not change them.
 
 ### Views
 
