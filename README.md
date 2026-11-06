@@ -27,7 +27,7 @@ The library is on Maven Central:
 
 | Group | Artifact | Version |
 |---|---|---|
-| `studio.etsoftware` | `oklch` | `1.1.0` |
+| `studio.etsoftware` | `oklch` | `1.1.1` |
 
 Requires minSdk 21. It brings in Compose `ui-graphics` 1.8.1 as an `api` dependency.
 
@@ -36,7 +36,7 @@ your module's `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("studio.etsoftware:oklch:1.1.0")
+    implementation("studio.etsoftware:oklch:1.1.1")
 }
 ```
 
@@ -44,7 +44,7 @@ Or with a version catalog (`gradle/libs.versions.toml`):
 
 ```toml
 [versions]
-oklch = "1.1.0"
+oklch = "1.1.1"
 
 [libraries]
 oklch = { module = "studio.etsoftware:oklch", version.ref = "oklch" }

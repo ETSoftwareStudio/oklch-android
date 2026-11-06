@@ -22,6 +22,12 @@ kotlin {
     jvmToolchain(17)
 }
 
+tasks.withType<Test>().configureEach {
+    // ART does little escape analysis, so turn HotSpot's off: OklchAllocationTest then
+    // counts the allocations a phone would make.
+    jvmArgs("-XX:-DoEscapeAnalysis")
+}
+
 dependencies {
     api("androidx.compose.ui:ui-graphics:1.8.1")
     implementation("androidx.annotation:annotation:1.9.1")
@@ -32,7 +38,7 @@ dependencies {
 }
 
 mavenPublishing {
-    coordinates("studio.etsoftware", "oklch", "1.1.0")
+    coordinates("studio.etsoftware", "oklch", "1.1.1")
     publishToMavenCentral()
     // Maven Central requires signed artifacts. Sign whenever a key is configured
     // (~/.gradle/gradle.properties or CI), so local builds work without one.
