@@ -1,0 +1,29 @@
+version: 2
+updates:
+  - package-ecosystem: gradle
+    directory: /
+    schedule:
+      interval: weekly
+    # build: does not trigger a release. Tooling updates don't change what apps get.
+    commit-message:
+      prefix: build
+      include: scope
+    groups:
+      gradle:
+        patterns: ["*"]
+    ignore:
+      # Runtime dependencies of the published library. Raising them raises the minimum
+      # version every app must use, so raise them on purpose, not on a schedule.
+      - dependency-name: "androidx.compose.ui:*"
+      - dependency-name: "androidx.compose.runtime:*"
+      - dependency-name: "androidx.annotation:*"
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: ci
+    groups:
+      actions:
+        patterns: ["*"]
