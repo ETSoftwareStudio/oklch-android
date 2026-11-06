@@ -29,7 +29,8 @@ The library is on Maven Central:
 |---|---|---|
 | `studio.etsoftware` | `oklch` | `1.1.1` |
 
-Requires minSdk 21. It brings in Compose `ui-graphics` 1.8.1 as an `api` dependency.
+Requires minSdk 21 and Compose 1.0 or newer. It depends on Compose `ui-graphics` 1.0.0 as an
+`api` dependency: Gradle uses the newer Compose your app already has.
 
 `mavenCentral()` is already in the repositories of new Android projects. Add the dependency to
 your module's `build.gradle.kts`:

@@ -29,10 +29,15 @@ tasks.withType<Test>().configureEach {
 }
 
 dependencies {
-    api("androidx.compose.ui:ui-graphics:1.8.1")
-    implementation("androidx.annotation:annotation:1.9.1")
+    // These versions are the minimum the library needs, not the newest available: Gradle picks
+    // the highest version in the app, so an app on newer Compose gets its own version. Raising
+    // them would force every app up too (newer compileSdk, AGP and minSdk). Dependabot ignores
+    // them, so raise them on purpose, only when the library needs a newer API.
+    api("androidx.compose.ui:ui-graphics:1.0.0")
+    // ui-graphics 1.0.0 already brings in annotation 1.2.0.
+    implementation("androidx.annotation:annotation:1.2.0")
     // For @Immutable. ui-graphics already brings this artifact in at runtime.
-    implementation("androidx.compose.runtime:runtime:1.8.1")
+    implementation("androidx.compose.runtime:runtime:1.0.0")
 
     testImplementation("junit:junit:4.13.2")
 }
