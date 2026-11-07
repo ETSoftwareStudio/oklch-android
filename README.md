@@ -144,6 +144,7 @@ sRGB, so they still look right, just less vivid at high chroma:
 Releases are automated with [release-please](https://github.com/googleapis/release-please).
 Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/):
 `fix:` and `perf:` make a patch release, `feat:` a minor one, and `feat!:` a major one.
+PR titles must follow it too (CI checks them): a squash merge keeps only the title.
 
 1. Merge changes into `main`. release-please keeps a "chore(main): release X.Y.Z" PR open
    with the version bump and the changelog.
