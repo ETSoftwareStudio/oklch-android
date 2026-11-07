@@ -28,7 +28,7 @@ The library is on Maven Central:
 <!-- x-release-please-start-version -->
 | Group | Artifact | Version |
 |---|---|---|
-| `studio.etsoftware` | `oklch` | `1.1.1` |
+| `studio.etsoftware` | `oklch` | `1.1.2` |
 <!-- x-release-please-end -->
 
 Requires minSdk 21 and Compose 1.0 or newer. It depends on Compose `ui-graphics` 1.0.0 as an
@@ -40,7 +40,7 @@ your module's `build.gradle.kts`:
 <!-- x-release-please-start-version -->
 ```kotlin
 dependencies {
-    implementation("studio.etsoftware:oklch:1.1.1")
+    implementation("studio.etsoftware:oklch:1.1.2")
 }
 ```
 <!-- x-release-please-end -->
@@ -50,7 +50,7 @@ Or with a version catalog (`gradle/libs.versions.toml`):
 <!-- x-release-please-start-version -->
 ```toml
 [versions]
-oklch = "1.1.1"
+oklch = "1.1.2"
 
 [libraries]
 oklch = { module = "studio.etsoftware:oklch", version.ref = "oklch" }

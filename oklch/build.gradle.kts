@@ -44,7 +44,7 @@ dependencies {
 
 mavenPublishing {
     // release-please updates this version in its release PR.
-    coordinates("studio.etsoftware", "oklch", "1.1.1") // x-release-please-version
+    coordinates("studio.etsoftware", "oklch", "1.1.2") // x-release-please-version
     publishToMavenCentral()
     // Maven Central requires signed artifacts. Sign whenever a key is configured
     // (~/.gradle/gradle.properties or CI), so local builds work without one.
