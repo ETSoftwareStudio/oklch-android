@@ -4,7 +4,6 @@ updates:
     directory: /
     schedule:
       interval: weekly
-    # build: does not trigger a release. Tooling updates don't change what apps get.
     commit-message:
       prefix: build
       include: scope
@@ -12,8 +11,7 @@ updates:
       gradle:
         patterns: ["*"]
     ignore:
-      # Runtime dependencies of the published library. Raising them raises the minimum
-      # version every app must use, so raise them on purpose, not on a schedule.
+      # The library's minimum versions: raise them by hand, only when needed.
       - dependency-name: "androidx.compose.ui:*"
       - dependency-name: "androidx.compose.runtime:*"
       - dependency-name: "androidx.annotation:*"

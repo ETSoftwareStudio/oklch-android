@@ -1,9 +1,6 @@
 name: Release
 
-# release-please keeps a release PR open on main. Merging it creates the tag and the GitHub
-# release, and the publish job below then publishes that version to Maven Central.
-# Both jobs live in one workflow because a tag created with GITHUB_TOKEN does not start
-# other workflows.
+# Publishing lives here because a tag created with GITHUB_TOKEN starts no other workflow.
 on:
   push:
     branches: [main]
@@ -22,12 +19,21 @@ jobs:
       contents: write
       pull-requests: write
       issues: write
+      actions: write
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
       tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
       - id: release
         uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+      # The release PR gets no pull_request runs (GITHUB_TOKEN), so start its required checks.
+      - name: Run the required checks on the release PR
+        if: steps.release.outputs.prs_created == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run ci.yml --repo "$GITHUB_REPOSITORY" --ref release-please--branches--main
+          gh workflow run pr-title.yml --repo "$GITHUB_REPOSITORY" --ref release-please--branches--main
 
   publish:
     needs: release-please
