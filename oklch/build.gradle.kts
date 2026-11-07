@@ -1,3 +1,7 @@
+import java.util.jar.JarFile
+import kotlinx.validation.api.dump
+import kotlinx.validation.api.filterOutNonPublic
+import kotlinx.validation.api.loadApiFromJvmClasses
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
@@ -103,3 +107,44 @@ mavenPublishing {
         }
     }
 }
+
+// Public API check. The binary-compatibility-validator plugin and Kotlin's abiValidation
+// don't see AGP 9's built-in Kotlin yet, so call the validator library on the release classes.
+val apiFile = layout.projectDirectory.file("api/oklch.api")
+val releaseClasses = layout.buildDirectory.file(
+    "intermediates/compile_library_classes_jar/release/bundleLibCompileToJarRelease/classes.jar",
+)
+
+fun currentApi(): String = JarFile(releaseClasses.get().asFile).use { jar ->
+    jar.loadApiFromJvmClasses()
+        .filterOutNonPublic(nonPublicPackages = emptyList(), nonPublicClasses = listOf("studio.etsoftware.oklch.R"))
+        .dump(StringBuilder())
+        .toString()
+}
+
+val apiDump by tasks.registering {
+    group = "verification"
+    description = "Writes the public API to api/oklch.api."
+    dependsOn("bundleLibCompileToJarRelease")
+    doLast {
+        apiFile.asFile.parentFile.mkdirs()
+        apiFile.asFile.writeText(currentApi())
+    }
+}
+
+val apiCheck by tasks.registering {
+    group = "verification"
+    description = "Fails if the public API differs from api/oklch.api."
+    dependsOn("bundleLibCompileToJarRelease")
+    inputs.file(apiFile)
+    doLast {
+        if (currentApi() != apiFile.asFile.readText()) {
+            throw GradleException(
+                "The public API changed. Run ./gradlew apiDump and commit oklch/api/oklch.api. " +
+                    "If anything was removed or changed, mark the PR title as breaking with '!'.",
+            )
+        }
+    }
+}
+
+tasks.named("check") { dependsOn(apiCheck) }
