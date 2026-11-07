@@ -42,6 +42,23 @@ tasks.withType<Test>().configureEach {
     jvmArgs("-XX:-DoEscapeAnalysis")
 }
 
+// CI also runs the tests with -PlatestCompose: apps on newer Compose run the library against
+// their version, so test the newest stable one too. Never set when publishing.
+if (providers.gradleProperty("latestCompose").isPresent) {
+    configurations.configureEach {
+        resolutionStrategy {
+            eachDependency {
+                if (requested.group.startsWith("androidx.compose.")) useVersion("+")
+            }
+            componentSelection.all {
+                if (Regex("(?i)(alpha|beta|rc|dev)").containsMatchIn(candidate.version)) {
+                    reject("pre-release")
+                }
+            }
+        }
+    }
+}
+
 dependencies {
     // These versions are the minimum the library needs, not the newest available: Gradle picks
     // the highest version in the app, so an app on newer Compose gets its own version. Raising
