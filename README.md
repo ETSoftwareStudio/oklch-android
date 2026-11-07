@@ -25,30 +25,37 @@ oklchColorLong(0.55, 0.15, 262)             // Views, Display P3 @ColorLong, API
 
 The library is on Maven Central:
 
+<!-- x-release-please-start-version -->
 | Group | Artifact | Version |
 |---|---|---|
-| `studio.etsoftware` | `oklch` | `1.1.1` |
+| `studio.etsoftware` | `oklch` | `1.1.0` |
+<!-- x-release-please-end -->
 
-Requires minSdk 21. It brings in Compose `ui-graphics` 1.8.1 as an `api` dependency.
+Requires minSdk 21 and Compose 1.0 or newer. It depends on Compose `ui-graphics` 1.0.0 as an
+`api` dependency: Gradle uses the newer Compose your app already has.
 
 `mavenCentral()` is already in the repositories of new Android projects. Add the dependency to
 your module's `build.gradle.kts`:
 
+<!-- x-release-please-start-version -->
 ```kotlin
 dependencies {
-    implementation("studio.etsoftware:oklch:1.1.1")
+    implementation("studio.etsoftware:oklch:1.1.0")
 }
 ```
+<!-- x-release-please-end -->
 
 Or with a version catalog (`gradle/libs.versions.toml`):
 
+<!-- x-release-please-start-version -->
 ```toml
 [versions]
-oklch = "1.1.1"
+oklch = "1.1.0"
 
 [libraries]
 oklch = { module = "studio.etsoftware:oklch", version.ref = "oklch" }
 ```
+<!-- x-release-please-end -->
 
 ```kotlin
 dependencies {
@@ -134,11 +141,18 @@ sRGB, so they still look right, just less vivid at high chroma:
 
 ## Releasing
 
-1. Set the version in `oklch/build.gradle.kts` (`coordinates`).
-2. Keep the Central Portal user token and the GPG key in `~/.gradle/gradle.properties`
-   (`mavenCentralUsername`, `mavenCentralPassword`, `signingInMemoryKey`,
-   `signingInMemoryKeyPassword`), never in the repo.
-3. Run `./gradlew publishAndReleaseToMavenCentral`, then tag the commit with the version.
+Releases are automated with [release-please](https://github.com/googleapis/release-please).
+Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/):
+`fix:` and `perf:` make a patch release, `feat:` a minor one, and `feat!:` a major one.
+
+1. Merge changes into `main`. release-please keeps a "chore(main): release X.Y.Z" PR open
+   with the version bump and the changelog.
+2. Merge that PR to release. The Release workflow tags the version, creates the GitHub
+   release and publishes to Maven Central.
+
+The Central Portal user token and the GPG signing key are repository secrets
+(`MAVEN_CENTRAL_USERNAME`, `MAVEN_CENTRAL_PASSWORD`, `SIGNING_IN_MEMORY_KEY`,
+`SIGNING_IN_MEMORY_KEY_PASSWORD`), never in the repo.
 
 ## License
 
