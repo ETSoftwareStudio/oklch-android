@@ -1,6 +1,8 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+
 plugins {
+    // AGP 9 compiles Kotlin itself. The root build only sets the Kotlin version.
     id("com.android.library")
-    id("org.jetbrains.kotlin.android")
     id("com.vanniktech.maven.publish")
 }
 
@@ -10,6 +12,11 @@ android {
 
     defaultConfig {
         minSdk = 21
+        // AGP 9 otherwise writes compileSdk here, which would force every app to compile
+        // with SDK 36 or newer. Compose's own AARs already set the real floor.
+        aarMetadata {
+            minCompileSdk = 21
+        }
     }
 
     compileOptions {
@@ -20,12 +27,36 @@ android {
 
 kotlin {
     jvmToolchain(17)
+    // The compiler can be newer, but apps only need Kotlin 2.0 or newer (1.9 reads 2.0
+    // metadata). Raise these on purpose, like the Compose versions.
+    compilerOptions {
+        apiVersion = KotlinVersion.KOTLIN_2_0
+        languageVersion = KotlinVersion.KOTLIN_2_0
+    }
+    coreLibrariesVersion = "2.0.21"
 }
 
 tasks.withType<Test>().configureEach {
     // ART does little escape analysis, so turn HotSpot's off: OklchAllocationTest then
     // counts the allocations a phone would make.
     jvmArgs("-XX:-DoEscapeAnalysis")
+}
+
+// CI also runs the tests with -PlatestCompose: apps on newer Compose run the library against
+// their version, so test the newest stable one too. Never set when publishing.
+if (providers.gradleProperty("latestCompose").isPresent) {
+    configurations.configureEach {
+        resolutionStrategy {
+            eachDependency {
+                if (requested.group.startsWith("androidx.compose.")) useVersion("+")
+            }
+            componentSelection.all {
+                if (Regex("(?i)(alpha|beta|rc|dev)").containsMatchIn(candidate.version)) {
+                    reject("pre-release")
+                }
+            }
+        }
+    }
 }
 
 dependencies {
