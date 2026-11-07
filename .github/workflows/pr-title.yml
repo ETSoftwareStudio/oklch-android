@@ -1,11 +1,8 @@
 name: PR title
 
-# PRs are often squash-merged, and then release-please only sees the PR title. Check that
-# it is a Conventional Commit, so no change silently drops out of the changelog.
 on:
   pull_request:
     types: [opened, edited, reopened, synchronize]
-  # The Release workflow starts it on release-please's PR, which gets no pull_request runs.
   workflow_dispatch:
 
 permissions: {}
