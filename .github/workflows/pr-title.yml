@@ -5,6 +5,8 @@ name: PR title
 on:
   pull_request:
     types: [opened, edited, reopened, synchronize]
+  # The Release workflow starts it on release-please's PR, which gets no pull_request runs.
+  workflow_dispatch:
 
 permissions: {}
 
@@ -16,6 +18,14 @@ jobs:
         env:
           TITLE: ${{ github.event.pull_request.title }}
         run: |
+          if [ "$GITHUB_EVENT_NAME" = workflow_dispatch ]; then
+            if [ "$GITHUB_REF_NAME" = release-please--branches--main ]; then
+              echo "release-please's PR: its title is generated, nothing to check."
+              exit 0
+            fi
+            echo "::error::Only the Release workflow may start this check, on release-please's branch."
+            exit 1
+          fi
           pattern='^(feat|fix|perf|refactor|docs|test|build|ci|chore|style|revert)(\([a-z0-9._-]+\))?!?: .+'
           if ! [[ "$TITLE" =~ $pattern ]]; then
             echo "::error::PR title \"$TITLE\" is not a Conventional Commit, e.g. \"fix: clamp hue before mixing\"."
