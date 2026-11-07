@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/ETSoftwareStudio/oklch-android/compare/1.1.1...1.1.2) (2026-11-07)
+
+
+### Bug Fixes
+
+* **deps:** accept Compose 1.0.0 and newer ([7b0d361](https://github.com/ETSoftwareStudio/oklch-android/commit/7b0d361e863dbafd2e17fc806d74151086fce21a))
+
 ## [1.1.1](https://github.com/ETSoftwareStudio/oklch-android/compare/1.1.0...1.1.1) (2026-11-07)
 
 
