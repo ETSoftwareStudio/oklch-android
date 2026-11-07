@@ -146,6 +146,10 @@ Commit messages follow [Conventional Commits](https://www.conventionalcommits.or
 `fix:` and `perf:` make a patch release, `feat:` a minor one, and `feat!:` a major one.
 PR titles must follow it too (CI checks them): a squash merge keeps only the title.
 
+The public API is tracked in `oklch/api/oklch.api`. If a PR changes it, run `./gradlew apiDump`
+and commit the file. Removing or changing anything there breaks apps, so CI then requires `!`
+in the PR title.
+
 1. Merge changes into `main`. release-please keeps a "chore(main): release X.Y.Z" PR open
    with the version bump and the changelog.
 2. Merge that PR to release. The Release workflow tags the version, creates the GitHub

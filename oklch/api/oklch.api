@@ -1,0 +1,61 @@
+public final class studio/etsoftware/oklch/Oklch {
+	public static final field Companion Lstudio/etsoftware/oklch/Oklch$Companion;
+	public fun <init> (DDDF)V
+	public synthetic fun <init> (DDDFILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()D
+	public final fun component2 ()D
+	public final fun component3 ()D
+	public final fun component4 ()F
+	public final fun copy (DDDF)Lstudio/etsoftware/oklch/Oklch;
+	public static synthetic fun copy$default (Lstudio/etsoftware/oklch/Oklch;DDDFILjava/lang/Object;)Lstudio/etsoftware/oklch/Oklch;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAlpha ()F
+	public final fun getC ()D
+	public final fun getH ()D
+	public final fun getL ()D
+	public fun hashCode ()I
+	public final fun mix (Lstudio/etsoftware/oklch/Oklch;D)Lstudio/etsoftware/oklch/Oklch;
+	public final fun toColor-vNxB06k (Lstudio/etsoftware/oklch/OklchGamut;)J
+	public static synthetic fun toColor-vNxB06k$default (Lstudio/etsoftware/oklch/Oklch;Lstudio/etsoftware/oklch/OklchGamut;ILjava/lang/Object;)J
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class studio/etsoftware/oklch/Oklch$Companion {
+	public final fun from-8_81llA (J)Lstudio/etsoftware/oklch/Oklch;
+	public final fun rgb (DDDLstudio/etsoftware/oklch/OklchGamut;)Lstudio/etsoftware/oklch/Oklch$Rgb;
+	public static synthetic fun rgb$default (Lstudio/etsoftware/oklch/Oklch$Companion;DDDLstudio/etsoftware/oklch/OklchGamut;ILjava/lang/Object;)Lstudio/etsoftware/oklch/Oklch$Rgb;
+}
+
+public final class studio/etsoftware/oklch/Oklch$Rgb {
+	public fun <init> (DDD)V
+	public final fun component1 ()D
+	public final fun component2 ()D
+	public final fun component3 ()D
+	public final fun copy (DDD)Lstudio/etsoftware/oklch/Oklch$Rgb;
+	public static synthetic fun copy$default (Lstudio/etsoftware/oklch/Oklch$Rgb;DDDILjava/lang/Object;)Lstudio/etsoftware/oklch/Oklch$Rgb;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBlue ()D
+	public final fun getGreen ()D
+	public final fun getRed ()D
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class studio/etsoftware/oklch/OklchGamut : java/lang/Enum {
+	public static final field DisplayP3 Lstudio/etsoftware/oklch/OklchGamut;
+	public static final field SRGB Lstudio/etsoftware/oklch/OklchGamut;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lstudio/etsoftware/oklch/OklchGamut;
+	public static fun values ()[Lstudio/etsoftware/oklch/OklchGamut;
+}
+
+public final class studio/etsoftware/oklch/OklchKt {
+	public static final fun oklch (Landroidx/compose/ui/graphics/Color$Companion;Ljava/lang/Number;Ljava/lang/Number;Ljava/lang/Number;FLstudio/etsoftware/oklch/OklchGamut;)J
+	public static synthetic fun oklch$default (Landroidx/compose/ui/graphics/Color$Companion;Ljava/lang/Number;Ljava/lang/Number;Ljava/lang/Number;FLstudio/etsoftware/oklch/OklchGamut;ILjava/lang/Object;)J
+	public static final fun oklchColorInt (Ljava/lang/Number;Ljava/lang/Number;Ljava/lang/Number;F)I
+	public static synthetic fun oklchColorInt$default (Ljava/lang/Number;Ljava/lang/Number;Ljava/lang/Number;FILjava/lang/Object;)I
+	public static final fun oklchColorLong (Ljava/lang/Number;Ljava/lang/Number;Ljava/lang/Number;F)J
+	public static synthetic fun oklchColorLong$default (Ljava/lang/Number;Ljava/lang/Number;Ljava/lang/Number;FILjava/lang/Object;)J
+	public static final fun toOklch-8_81llA (J)Lstudio/etsoftware/oklch/Oklch;
+}
+
