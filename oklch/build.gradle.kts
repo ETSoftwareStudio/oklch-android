@@ -67,7 +67,7 @@ dependencies {
     implementation("androidx.compose.runtime:runtime:1.0.0")
 
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.robolectric:robolectric:4.17")
+    testImplementation("org.robolectric:robolectric:4.18")
 }
 
 mavenPublishing {
